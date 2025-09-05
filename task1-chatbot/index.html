@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Lady FAQ Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="chatbot-header">
+            <img src="../assets/iron-lady-logo.png" alt="Iron Lady" class="logo" onerror="this.style.display='none'">
+            <h1>Iron Lady FAQ Chatbot</h1>
+            <p>Ask me about Iron Lady's leadership programs!</p>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>Hello! I'm here to help you learn about Iron Lady's leadership programs. You can ask me about:</p>
+                        <ul>
+                            <li>What programs does Iron Lady offer?</li>
+                            <li>What is the program duration?</li>
+                            <li>Is the program online or offline?</li>
+                            <li>Are certificates provided?</li>
+                            <li>Who are the mentors/coaches?</li>
+                        </ul>
+                        <p>Feel free to ask any question!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-questions">
+                <button class="quick-btn" onclick="askQuestion('What programs does Iron Lady offer?')">Programs Offered</button>
+                <button class="quick-btn" onclick="askQuestion('What is the program duration?')">Duration</button>
+                <button class="quick-btn" onclick="askQuestion('Is the program online or offline?')">Online/Offline</button>
+                <button class="quick-btn" onclick="askQuestion('Are certificates provided?')">Certificates</button>
+                <button class="quick-btn" onclick="askQuestion('Who are the mentors?')">Mentors</button>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" id="userInput" placeholder="Ask me about Iron Lady's programs..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

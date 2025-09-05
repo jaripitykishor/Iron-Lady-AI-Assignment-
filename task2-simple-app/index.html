@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Lady Course Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <h1>Iron Lady CMS</h1>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" onclick="showSection('dashboard')">
+                    <i class="fas fa-dashboard"></i> Dashboard
+                </button>
+                <button class="nav-btn" onclick="showSection('courses')">
+                    <i class="fas fa-book"></i> Courses
+                </button>
+                <button class="nav-btn" onclick="showSection('add-course')">
+                    <i class="fas fa-plus"></i> Add Course
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-dashboard"></i> Dashboard</h2>
+                    <p>Overview of your course management system</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalCourses">0</h3>
+                            <p>Total Courses</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalDuration">0</h3>
+                            <p>Total Hours</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="avgRating">0</h3>
+                            <p>Avg Rating</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalStudents">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="recent-courses">
+                        <h3>Recent Courses</h3>
+                        <div id="recentCoursesList" class="courses-preview">
+                            <!-- Recent courses will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="ai-recommendations">
+                        <h3><i class="fas fa-robot"></i> AI Recommendations</h3>
+                        <div class="recommendation-card">
+                            <h4>Suggested Course Topics</h4>
+                            <div id="aiSuggestions" class="ai-suggestions-list">
+                                <!-- AI suggestions will be populated here -->
+                            </div>
+                            <button class="btn btn-ai" onclick="generateAISuggestions()">
+                                <i class="fas fa-magic"></i> Generate New Suggestions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-book"></i> All Courses</h2>
+                    <div class="controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search courses..." onkeyup="filterCourses()">
+                        </div>
+                        <select id="filterCategory" onchange="filterCourses()">
+                            <option value="">All Categories</option>
+                            <option value="Leadership">Leadership</option>
+                            <option value="Management">Management</option>
+                            <option value="Communication">Communication</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Personal Development">Personal Development</option>
+                        </select>
+                        <select id="sortBy" onchange="sortCourses()">
+                            <option value="name">Sort by Name</option>
+                            <option value="date">Sort by Date</option>
+                            <option value="duration">Sort by Duration</option>
+                            <option value="rating">Sort by Rating</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="coursesList" class="courses-grid">
+                    <!-- Courses will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Course Section -->
+        <section id="add-course" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-plus"></i> Add New Course</h2>
+                    <p>Create a new course for Iron Lady's curriculum</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="courseForm" class="course-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="courseName">Course Name <span class="required">*</span></label>
+                                <input type="text" id="courseName" name="courseName" required>
+                                <div class="ai-assist">
+                                    <button type="button" class="btn-ai-small" onclick="generateCourseName()">
+                                        <i class="fas fa-magic"></i> AI Suggest
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="courseCategory">Category <span class="required">*</span></label>
+                                <select id="courseCategory" name="courseCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Leadership">Leadership</option>
+                                    <option value="Management">Management</option>
+                                    <option value="Communication">Communication</option>
+                                    <option value="Technical">Technical</option>
+                                    <option value="Personal Development">Personal Development</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="courseDuration">Duration (hours) <span class="required">*</span></label>
+                                <input type="number" id="courseDuration" name="courseDuration" min="1" max="1000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="courseRating">Rating (1-5)</label>
+                                <div class="rating-input">
+                                    <div class="stars" id="starRating">
+                                        <span class="star" data-rating="1">⭐</span>
+                                        <span class="star" data-rating="2">⭐</span>
+                                        <span class="star" data-rating="3">⭐</span>
+                                        <span class="star" data-rating="4">⭐</span>
+                                        <span class="star" data-rating="5">⭐</span>
+                                    </div>
+                                    <input type="hidden" id="courseRating" name="courseRating" value="5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="coursePrice">Price ($)</label>
+                                <input type="number" id="coursePrice" name="coursePrice" min="0" step="0.01">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="courseStudents">Max Students</label>
+                                <input type="number" id="courseStudents" name="courseStudents" min="1" value="25">
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="courseDescription">Description <span class="required">*</span></label>
+                            <textarea id="courseDescription" name="courseDescription" rows="4" required></textarea>
+                            <div class="ai-assist">
+                                <button type="button" class="btn-ai-small" onclick="generateCourseDescription()">
+                                    <i class="fas fa-magic"></i> AI Generate Description
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="courseLearningOutcomes">Learning Outcomes</label>
+                            <textarea id="courseLearningOutcomes" name="courseLearningOutcomes" rows="3" 
+                                placeholder="What will students learn from this course?"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-refresh"></i> Reset
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> <span id="submitText">Save Course</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Course Detail Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="courseDetails">
+                <!-- Course details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
