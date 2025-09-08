@@ -9,7 +9,7 @@ class CourseManagementSystem {
         this.initializeStarRating();
         this.initializeApp();
         
-        // AI-powered suggestions data
+        // Enhanced AI-powered suggestions data
         this.aiSuggestions = [
             "Advanced Leadership Communication for Women",
             "Digital Transformation Leadership",
@@ -20,8 +20,79 @@ class CourseManagementSystem {
             "Inclusive Leadership Practices",
             "Crisis Management and Leadership",
             "Innovation and Creative Leadership",
-            "Global Leadership in Remote Teams"
+            "Global Leadership in Remote Teams",
+            "Sustainable Leadership Practices",
+            "Cross-Cultural Leadership Excellence",
+            "Agile Leadership Methodologies",
+            "Executive Presence and Impact",
+            "Change Leadership Mastery"
         ];
+        
+        // Enhanced AI templates for more realistic generation
+        this.aiTemplates = {
+            courseNames: {
+                Leadership: [
+                    "Executive Leadership Accelerator",
+                    "Strategic Leadership Mastery",
+                    "Women Leadership Excellence Program",
+                    "Advanced Leadership Transformation",
+                    "Global Leadership Impact Initiative",
+                    "Authentic Leadership Development",
+                    "Visionary Leadership Academy",
+                    "Leadership Innovation Lab",
+                    "Executive Presence Mastery",
+                    "Transformational Leadership Journey"
+                ],
+                Management: [
+                    "Modern Management Excellence",
+                    "Strategic Team Management",
+                    "Performance Management Mastery",
+                    "Agile Management Practices",
+                    "Digital Age Management Skills",
+                    "Innovation Management Program",
+                    "Cross-Functional Management",
+                    "People Management Excellence",
+                    "Strategic Operations Management",
+                    "Change Management Leadership"
+                ],
+                Communication: [
+                    "Executive Communication Mastery",
+                    "Strategic Communication Excellence",
+                    "Leadership Communication Impact",
+                    "Digital Communication Strategies",
+                    "Cross-Cultural Communication",
+                    "Influential Communication Skills",
+                    "Executive Storytelling Mastery",
+                    "Crisis Communication Leadership",
+                    "Persuasive Communication Techniques",
+                    "Authentic Communication Excellence"
+                ],
+                Technical: [
+                    "Digital Leadership for Tech Professionals",
+                    "Technology Management Excellence",
+                    "AI and Leadership Integration",
+                    "Digital Transformation Leadership",
+                    "Tech Leadership Fundamentals",
+                    "Innovation in Technology Leadership",
+                    "Cybersecurity Leadership Program",
+                    "Data-Driven Leadership Excellence",
+                    "Cloud Leadership Strategies",
+                    "Emerging Tech Leadership"
+                ],
+                'Personal Development': [
+                    "Personal Leadership Excellence",
+                    "Career Acceleration Program",
+                    "Professional Growth Mastery",
+                    "Leadership Mindset Development",
+                    "Executive Career Transformation",
+                    "Personal Brand Leadership",
+                    "Resilience and Leadership",
+                    "Confidence Building for Leaders",
+                    "Work-Life Integration Mastery",
+                    "Purpose-Driven Leadership"
+                ]
+            }
+        };
     }
 
     // Initialize the application
@@ -460,16 +531,36 @@ class CourseManagementSystem {
         }, 3000);
     }
 
-    // AI-Powered Features
+    // Enhanced AI-Powered Features
     generateAISuggestions() {
         const suggestionsList = document.getElementById('aiSuggestions');
-        const randomSuggestions = this.getRandomSuggestions(3);
         
-        suggestionsList.innerHTML = randomSuggestions.map(suggestion => `
-            <div class="ai-suggestion-item">
-                <i class="fas fa-lightbulb"></i> ${suggestion}
+        // Show loading state
+        suggestionsList.innerHTML = `
+            <div class="ai-suggestion-item loading">
+                <i class="fas fa-robot"></i> AI is analyzing current trends...
             </div>
-        `).join('');
+        `;
+        
+        setTimeout(() => {
+            const randomSuggestions = this.getRandomSuggestions(4);
+            const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+            
+            suggestionsList.innerHTML = `
+                <div class="ai-suggestion-header">
+                    <i class="fas fa-magic"></i> AI-Powered Suggestions for ${currentMonth}
+                </div>
+                ${randomSuggestions.map(suggestion => `
+                    <div class="ai-suggestion-item">
+                        <i class="fas fa-lightbulb"></i> ${suggestion}
+                        <small class="suggestion-meta">Trending in professional development</small>
+                    </div>
+                `).join('')}
+                <div class="ai-suggestion-footer">
+                    <small><i class="fas fa-info-circle"></i> Suggestions powered by AI analysis of industry trends</small>
+                </div>
+            `;
+        }, 800);
     }
 
     getRandomSuggestions(count) {
@@ -481,94 +572,183 @@ class CourseManagementSystem {
         const courseNameInput = document.getElementById('courseName');
         const category = document.getElementById('courseCategory').value;
         
-        let suggestions = [];
-        if (category === 'Leadership') {
-            suggestions = [
-                "Advanced Leadership Excellence Program",
-                "Strategic Leadership Masterclass",
-                "Executive Leadership Transformation",
-                "Women Leadership Accelerator",
-                "Global Leadership Excellence"
-            ];
-        } else if (category === 'Management') {
-            suggestions = [
-                "Modern Management Strategies",
-                "Team Management Excellence",
-                "Strategic Management Foundations",
-                "Digital Age Management",
-                "Innovation Management Program"
-            ];
-        } else if (category === 'Communication') {
-            suggestions = [
-                "Executive Communication Mastery",
-                "Strategic Communication Skills",
-                "Leadership Communication Excellence",
-                "Digital Communication Strategies",
-                "Cross-Cultural Communication"
-            ];
-        } else if (category === 'Technical') {
-            suggestions = [
-                "Digital Leadership for Tech Professionals",
-                "Technology Management Excellence",
-                "AI and Leadership Integration",
-                "Digital Transformation Leadership",
-                "Tech Leadership Fundamentals"
-            ];
-        } else {
-            suggestions = [
-                "Professional Development Accelerator",
-                "Career Excellence Program",
-                "Personal Leadership Journey",
-                "Growth Mindset Development",
-                "Excellence and Innovation Program"
-            ];
+        if (!category) {
+            this.showToast('Please select a category first!', 'error');
+            return;
         }
         
-        const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-        courseNameInput.value = randomSuggestion;
+        // Simulate AI processing delay
+        courseNameInput.value = 'AI is generating...';
+        courseNameInput.style.background = 'linear-gradient(45deg, #e8f5e8, #f0f8ff)';
         
-        // Add visual feedback
-        courseNameInput.style.background = 'linear-gradient(45deg, #e3f2fd, #f3e5f5)';
         setTimeout(() => {
-            courseNameInput.style.background = '';
-        }, 2000);
-        
-        this.showToast('AI-generated course name suggestion applied!', 'success');
+            const suggestions = this.aiTemplates.courseNames[category] || this.aiTemplates.courseNames['Personal Development'];
+            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+            
+            courseNameInput.value = randomSuggestion;
+            
+            // Enhanced visual feedback
+            courseNameInput.style.background = 'linear-gradient(45deg, #e3f2fd, #f3e5f5)';
+            courseNameInput.style.border = '2px solid #4CAF50';
+            
+            setTimeout(() => {
+                courseNameInput.style.background = '';
+                courseNameInput.style.border = '';
+            }, 3000);
+            
+            this.showToast('✨ AI-powered course name generated successfully!', 'success');
+        }, 800); // Simulate AI processing time
     }
 
     generateCourseDescription() {
         const descriptionTextarea = document.getElementById('courseDescription');
         const courseName = document.getElementById('courseName').value;
         const category = document.getElementById('courseCategory').value;
-        const duration = document.getElementById('courseDuration').value;
+        const duration = document.getElementById('courseDuration').value || '40';
         
-        if (!courseName) {
-            this.showToast('Please enter a course name first!', 'error');
+        if (!courseName || !category) {
+            this.showToast('Please enter a course name and select a category first!', 'error');
             return;
         }
         
-        const templates = {
-            'Leadership': `This comprehensive ${duration}-hour program, "${courseName}", is designed to empower women leaders with advanced leadership skills and strategic thinking capabilities. Participants will develop executive presence, learn to navigate complex organizational challenges, and build the confidence needed to excel in senior leadership roles. The course combines theoretical frameworks with practical applications, case studies, and peer learning opportunities.`,
-            
-            'Management': `"${courseName}" is an intensive ${duration}-hour management program focusing on modern leadership practices and team optimization. This course covers strategic planning, performance management, team dynamics, and organizational effectiveness. Participants will learn evidence-based management techniques and develop skills in decision-making, conflict resolution, and change management.`,
-            
-            'Communication': `This ${duration}-hour program, "${courseName}", develops advanced communication skills essential for effective leadership. The course covers public speaking, executive presentation skills, difficult conversations, and strategic communication planning. Participants will enhance their ability to influence, persuade, and inspire teams while building authentic leadership presence.`,
-            
-            'Technical': `"${courseName}" is a ${duration}-hour program designed for technology professionals transitioning into leadership roles. The course bridges technical expertise with leadership skills, covering digital transformation, technology strategy, and leading technical teams. Participants will learn to communicate technical concepts to non-technical stakeholders and drive innovation in technology-focused organizations.`,
-            
-            'Personal Development': `This transformative ${duration}-hour program, "${courseName}", focuses on personal leadership and professional growth. Participants will develop self-awareness, emotional intelligence, and personal leadership philosophy. The course includes goal setting, career planning, work-life integration, and building resilience in leadership roles.`
-        };
+        // Simulate AI processing delay
+        descriptionTextarea.value = 'AI is analyzing course requirements and generating comprehensive description...';
+        descriptionTextarea.style.background = 'linear-gradient(45deg, #fff3e0, #f3e5f5)';
         
-        const description = templates[category] || templates['Personal Development'];
-        descriptionTextarea.value = description;
-        
-        // Add visual feedback
-        descriptionTextarea.style.background = 'linear-gradient(45deg, #e8f5e8, #f0f8ff)';
         setTimeout(() => {
-            descriptionTextarea.style.background = '';
-        }, 2000);
+            const templates = {
+                'Leadership': {
+                    intro: `Transform your leadership potential with "${courseName}", a comprehensive ${duration}-hour program designed specifically for emerging women leaders.`,
+                    content: `This intensive course combines cutting-edge leadership theory with practical application, covering strategic thinking, team dynamics, and executive presence. Participants will master the art of inspirational leadership, develop authentic communication styles, and learn to navigate complex organizational challenges with confidence.`,
+                    outcomes: `Key Learning Outcomes: Executive presence development, Strategic decision-making, Team leadership excellence, Change management skills, Authentic leadership style, Conflict resolution mastery, and Personal leadership philosophy.`,
+                    closing: `Upon completion, graduates will possess the skills, confidence, and strategic mindset necessary to excel in senior leadership positions and drive meaningful organizational change.`
+                },
+                'Management': {
+                    intro: `Master modern management excellence with "${courseName}", an intensive ${duration}-hour program for aspiring and current managers.`,
+                    content: `This course integrates contemporary management theories with practical tools for team optimization, performance management, and organizational effectiveness. Participants will learn evidence-based approaches to people management, strategic planning, and operational excellence while developing their unique management philosophy.`,
+                    outcomes: `Key Learning Outcomes: Performance management systems, Team motivation strategies, Strategic planning execution, Operational efficiency, People development skills, Data-driven decision making, and Management communication excellence.`,
+                    closing: `Graduates will emerge with the competencies needed to build high-performing teams, drive results, and create positive workplace cultures that foster innovation and growth.`
+                },
+                'Communication': {
+                    intro: `Elevate your influence with "${courseName}", a dynamic ${duration}-hour program focused on executive communication mastery.`,
+                    content: `This comprehensive course develops advanced communication skills essential for leadership success. Participants will master public speaking, executive presentations, difficult conversations, and strategic communication planning. The program emphasizes authentic communication, digital messaging strategies, and cross-cultural competency.`,
+                    outcomes: `Key Learning Outcomes: Executive presentation skills, Persuasive communication techniques, Crisis communication management, Digital communication strategies, Cross-cultural communication, Storytelling for leadership, and Authentic voice development.`,
+                    closing: `Participants will graduate with the communication skills needed to inspire teams, influence stakeholders, and represent their organizations with confidence and authenticity.`
+                },
+                'Technical': {
+                    intro: `Bridge technical expertise with leadership excellence in "${courseName}", a specialized ${duration}-hour program for technology professionals.`,
+                    content: `This unique course combines technical acumen with leadership development, preparing participants to lead in technology-driven environments. The curriculum covers digital transformation, innovation management, technical team leadership, and strategic technology planning while maintaining focus on people leadership and organizational dynamics.`,
+                    outcomes: `Key Learning Outcomes: Technical team leadership, Digital transformation strategies, Innovation management, Technology strategy development, Cross-functional collaboration, Technical communication to non-technical audiences, and Emerging technology leadership.`,
+                    closing: `Graduates will be equipped to lead technical teams, drive digital innovation, and communicate complex technical concepts to diverse stakeholders while fostering collaborative, high-performance environments.`
+                },
+                'Personal Development': {
+                    intro: `Unlock your leadership potential with "${courseName}", a transformative ${duration}-hour journey of personal and professional growth.`,
+                    content: `This comprehensive program focuses on self-awareness, emotional intelligence, and personal leadership philosophy development. Participants will explore their values, strengths, and leadership style while building resilience, confidence, and career strategy. The course integrates mindfulness practices, goal-setting frameworks, and work-life integration strategies.`,
+                    outcomes: `Key Learning Outcomes: Self-awareness development, Emotional intelligence mastery, Personal leadership philosophy, Goal setting and achievement, Career strategy development, Work-life integration, Resilience building, and Confidence enhancement.`,
+                    closing: `Participants will emerge with a clear sense of purpose, enhanced self-confidence, and practical tools for continuous personal and professional growth throughout their leadership journey.`
+                }
+            };
+            
+            const template = templates[category] || templates['Personal Development'];
+            const fullDescription = `${template.intro}\n\n${template.content}\n\n${template.outcomes}\n\n${template.closing}`;
+            
+            descriptionTextarea.value = fullDescription;
+            
+            // Enhanced visual feedback
+            descriptionTextarea.style.background = 'linear-gradient(45deg, #e8f5e8, #f0f8ff)';
+            descriptionTextarea.style.border = '2px solid #2196F3';
+            
+            setTimeout(() => {
+                descriptionTextarea.style.background = '';
+                descriptionTextarea.style.border = '';
+            }, 4000);
+            
+            this.showToast('🚀 AI-powered course description generated successfully!', 'success');
+        }, 1500); // Longer delay to simulate more complex AI processing
+    }
+    
+    // NEW: Generate AI-powered learning outcomes
+    generateLearningOutcomes() {
+        const outcomesTextarea = document.getElementById('courseLearningOutcomes');
+        const courseName = document.getElementById('courseName').value;
+        const category = document.getElementById('courseCategory').value;
+        const duration = document.getElementById('courseDuration').value || '40';
         
-        this.showToast('AI-generated course description applied!', 'success');
+        if (!courseName || !category) {
+            this.showToast('Please enter a course name and select a category first!', 'error');
+            return;
+        }
+        
+        // Simulate AI processing
+        outcomesTextarea.value = 'AI is crafting personalized learning outcomes...';
+        outcomesTextarea.style.background = 'linear-gradient(45deg, #f3e5f5, #e8f5e8)';
+        
+        setTimeout(() => {
+            const outcomeTemplates = {
+                'Leadership': [
+                    'Develop authentic leadership presence and executive gravitas',
+                    'Master strategic thinking and decision-making frameworks',
+                    'Build high-performing teams through inspirational leadership',
+                    'Navigate organizational change with confidence and vision',
+                    'Cultivate emotional intelligence and empathetic leadership',
+                    'Create inclusive and diverse leadership environments',
+                    'Establish personal leadership philosophy and values'
+                ],
+                'Management': [
+                    'Implement effective performance management systems',
+                    'Optimize team productivity and operational efficiency',
+                    'Master conflict resolution and difficult conversations',
+                    'Develop data-driven decision making capabilities',
+                    'Build coaching and mentoring skills for team development',
+                    'Create positive workplace culture and employee engagement',
+                    'Apply agile management methodologies and practices'
+                ],
+                'Communication': [
+                    'Deliver compelling executive presentations with impact',
+                    'Master persuasive communication and influence techniques',
+                    'Develop authentic storytelling and narrative skills',
+                    'Navigate cross-cultural communication challenges',
+                    'Build crisis communication and reputation management skills',
+                    'Enhance digital communication and social media presence',
+                    'Cultivate active listening and empathetic communication'
+                ],
+                'Technical': [
+                    'Lead technical teams through digital transformation',
+                    'Translate complex technical concepts for diverse audiences',
+                    'Drive innovation and emerging technology adoption',
+                    'Develop technology strategy and roadmap planning',
+                    'Foster collaborative cross-functional partnerships',
+                    'Build cybersecurity awareness and risk management',
+                    'Champion data-driven decision making and analytics'
+                ],
+                'Personal Development': [
+                    'Enhance self-awareness and emotional intelligence',
+                    'Build resilience and stress management capabilities',
+                    'Develop personal brand and professional presence',
+                    'Create work-life integration and balance strategies',
+                    'Establish clear career goals and development plans',
+                    'Cultivate growth mindset and continuous learning habits',
+                    'Build confidence and overcome imposter syndrome'
+                ]
+            };
+            
+            const outcomes = outcomeTemplates[category] || outcomeTemplates['Personal Development'];
+            const selectedOutcomes = outcomes.sort(() => 0.5 - Math.random()).slice(0, 5);
+            const formattedOutcomes = selectedOutcomes.map((outcome, index) => `${index + 1}. ${outcome}`).join('\n');
+            
+            outcomesTextarea.value = formattedOutcomes;
+            
+            // Enhanced visual feedback
+            outcomesTextarea.style.background = 'linear-gradient(45deg, #f0f8ff, #e8f5e8)';
+            outcomesTextarea.style.border = '2px solid #FF9800';
+            
+            setTimeout(() => {
+                outcomesTextarea.style.background = '';
+                outcomesTextarea.style.border = '';
+            }, 3500);
+            
+            this.showToast('🎓 AI-generated learning outcomes ready!', 'success');
+        }, 1200);
     }
 }
 
@@ -603,6 +783,10 @@ function generateCourseName() {
 
 function generateCourseDescription() {
     courseSystem.generateCourseDescription();
+}
+
+function generateLearningOutcomes() {
+    courseSystem.generateLearningOutcomes();
 }
 
 // Initialize the Course Management System when the page loads
